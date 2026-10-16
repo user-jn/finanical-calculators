@@ -14,8 +14,9 @@ public class MortgageCalculator {
     double principal = scnr.nextDouble();
 
     // ask for annual interest rate as a percent
-    System.out.print("Enter loan length in years: ");
-    int loanYears = scnr.nextInt();
+    System.out.print("Enter annual interest rate: ");
+    double annualInterestRate = scnr.nextDouble();
+
 
 
 }
