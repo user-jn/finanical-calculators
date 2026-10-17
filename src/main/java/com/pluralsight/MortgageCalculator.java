@@ -11,7 +11,7 @@ public class MortgageCalculator {
         System.out.println("Mortgage Calculator");
 
         // ask for the amount of loan
-        System.out.print("Enter principal loan ammount: ");
+        System.out.print("Enter principal loan amount: ");
         double principal = scnr.nextDouble();
 
         // ask for annual interest rate as a percent
