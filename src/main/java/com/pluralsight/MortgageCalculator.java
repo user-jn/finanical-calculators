@@ -1,55 +1,109 @@
+
 package com.pluralsight;
 
 import java.util.Scanner;
 
 public class MortgageCalculator {
-    public static void main(String[] args) {
 
-        // create scanner so the user can enter information
-        Scanner scnr = new Scanner(System.in);
+    // This method receives the Scanner from Main.java
+    // We do not create another Scanner inside this calculator
+    public static void calculate(Scanner scnr) {
 
-        System.out.println("Mortgage Calculator");
+        // Display the mortgage calculator title
+        System.out.println("\n*** Mortgage Calculator ***");
 
-        // ask for the amount of loan
-        System.out.print("Enter principal loan amount: ");
+
+        // STEP 1: Ask for the home purchase price
+        // We use double because money can have decimal values
+        System.out.print("Enter the home purchase price: ");
         double principal = scnr.nextDouble();
 
-        // ask for annual interest rate as a percent
-        System.out.print("Enter annual interest rate: ");
-        double annualInterestRate = scnr.nextDouble();
 
-        // ask how many year the loan will last
+        // STEP 2: Ask how much money the user is putting down
+        // This amount will be subtracted from the purchase price
+        System.out.print("Enter your down payment: ");
+        double downPayment = scnr.nextDouble();
+
+
+        // STEP 3: Ask for the annual interest rate
+        // Example: Enter 7.625 for 7.625%
+        System.out.print("Enter annual interest rate (%): ");
+        double annualRate = scnr.nextDouble();
+
+
+        // STEP 4: Ask for the length of the loan in years
+        // We use int because we are asking for whole years
         System.out.print("Enter loan length in years: ");
-        int loanYears = scnr.nextInt();
+        int years = scnr.nextInt();
 
-        // convert the interest percent into decimal form
-        double interestDecimal = annualInterestRate / 100;
 
-        // convert annual interest into monthly interest
-        double monthlyInterestRate = interestDecimal / 12;
+        // STEP 5: Convert annual interest into monthly interest
+        // Divide by 100 to convert percentage into decimal form
+        // Divide by 12 because there are 12 months in a year
+        double monthlyRate = annualRate / 100 / 12;
 
-        // find total number of monthly payments
-        //ex. 15 years * 12 = 180 payments
-        int numberOfPayments = loanYears * 12;
 
-        // calculate the monthly mortgage payment
-        // M = P * (i * (1 + i)^n) / ((1 + i)^n - 1)
-        double monthlyPayment =
-                principal
-                        * (monthlyInterestRate
-                        * Math.pow(1 + monthlyInterestRate, numberOfPayments))
-                        / (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
+        // STEP 6: Calculate the total number of monthly payments
+        // Example: 30 years * 12 months = 360 payments
+        int numberOfPayments = years * 12;
 
-        // calculate total interest paid over the life of the loan
-        double totalInterest = (monthlyPayment * numberOfPayments) - principal;
 
-        // display results
+        // STEP 7: Calculate how much money is actually borrowed
+        // Subtract the down payment from the purchase price
+        double loanAmount = principal - downPayment;
+
+
+        // STEP 8: Create a variable to store the monthly payment
+        double monthlyPayment;
+
+
+        // STEP 9: Check if the annual interest rate is zero
+        // This prevents dividing by zero in our formula
+        if (annualRate == 0) {
+
+            // Without interest, divide the loan by total payments
+            monthlyPayment = loanAmount / numberOfPayments;
+
+        } else {
+
+            // Calculate the compound interest factor
+            // Math.pow raises a number to a power
+            double compoundFactor =
+                    Math.pow(1 + monthlyRate, numberOfPayments);
+
+
+            // Calculate the monthly mortgage payment
+            monthlyPayment = loanAmount *
+                    (monthlyRate * compoundFactor) /
+                    (compoundFactor - 1);
+        }
+
+
+        // STEP 10: Calculate the total interest paid
+        // Multiply monthly payment by the number of payments
+        // Subtract the original borrowed amount
+        double totalInterest =
+                (monthlyPayment * numberOfPayments) - loanAmount;
+
+
+        // STEP 11: Display the mortgage results
+        System.out.println("\n*** Mortgage Results ***");
+
+        // Display the down payment
+        System.out.printf("Down Payment: $%.2f%n", downPayment);
+
+        // Display how much money was borrowed
+        System.out.printf("Loan Amount: $%.2f%n", loanAmount);
+
+        // Display the monthly mortgage payment
         System.out.printf("Monthly Payment: $%.2f%n", monthlyPayment);
-        System.out.printf("Total Interest Paid: $%.2f%n", totalInterest);
 
-        // close scanner
-        scnr.close();
+        // Display the total interest paid
+        System.out.printf("Total Interest: $%.2f%n", totalInterest);
 
 
+        // We do not close scnr here
+        // Main.java is responsible for closing it
     }
 }
+
