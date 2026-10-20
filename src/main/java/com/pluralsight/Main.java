@@ -7,58 +7,53 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // Create one Scanner to get input from the user
-        // This Scanner will be shared with both calculators
+        // Create one Scanner for the entire menu
         Scanner scnr = new Scanner(System.in);
 
-        // Display the financial calculator menu
-        System.out.println("==== FINANCIAL CALCULATORS ====");
-        System.out.println("What calculator would you like to use?");
+        // Store the user's choice
+        String calculatorChoice = "";
 
-        // Display the two available calculators
-        System.out.println("1. Mortgage Calculator - Find Monthly Payment & Interest");
-        System.out.println("2. CD Calculator - Find Future Value of Your CD's One-Time Deposit");
-        System.out.println("X. Exit");
+        // Continue showing the menu until the user enters X
+        while (!calculatorChoice.equalsIgnoreCase("x")) {
 
-        // Ask the user to select a calculator
-        System.out.print("Select a calculator: ");
+            // Display the menu
+            System.out.println("\n==== FINANCIAL CALCULATORS ====");
+            System.out.println("What calculator would you like to use?");
+            System.out.println("1. Mortgage Calculator - Find Monthly Payment & Interest");
+            System.out.println("2. CD Calculator - Find Future Value of Your CD's One-Time Deposit");
+            System.out.println("X. Exit");
 
-        // Read the user's choice as a String
-        // This allows the user to enter 1, 2, or X
-        String calculatorChoice = scnr.nextLine();
+            // Ask for a menu selection
+            System.out.print("Select a calculator: ");
+            calculatorChoice = scnr.nextLine();
 
-        // Use switch to determine which calculator to run
-        switch (calculatorChoice) {
+            // Determine which calculator should run
+            switch (calculatorChoice) {
 
-            case "1":
+                case "1":
+                    // Pass our Scanner to the mortgage calculator
+                    MortgageCalculator.calculate(scnr);
+                    break;
 
-                // Run the Mortgage Calculator
-                // Pass our existing Scanner into the method
-                MortgageCalculator.calculate(scnr);
-                break;
+                case "2":
+                    // Pass our Scanner to the CD calculator
+                    CDCalculator.calculate(scnr);
+                    break;
 
-            case "2":
+                case "X":
+                case "x":
+                    // Exit the menu
+                    System.out.println("Thank you for using our calculators!");
+                    break;
 
-                // Run the CD Calculator
-                // Pass the same Scanner into the CD method
-                CDCalculator.calculate(scnr);
-                break;
-
-            case "X":
-            case "x":
-
-                // Exit the program
-                System.out.println("Thank you for using our calculators!");
-                break;
-
-            default:
-
-                // Handle an invalid selection
-                System.out.println("Invalid selection. Please try again.");
-                break;
+                default:
+                    // Handle an invalid choice
+                    System.out.println("Invalid selection. Please try again.");
+                    break;
+            }
         }
 
-        // Close the Scanner after the calculator finishes
+        // Close the Scanner only when exiting the program
         scnr.close();
     }
 }
