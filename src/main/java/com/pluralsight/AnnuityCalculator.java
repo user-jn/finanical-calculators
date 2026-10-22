@@ -6,6 +6,12 @@ public class AnnuityCalculator {
     public static void main(String[] args) {
         Scanner scnr = new Scanner(System.in);
 
+        calculate(scnr);
+
+    }
+    public static void calculate(Scanner scnr) {
+
+
         // welcome message
 
         System.out.println("""
@@ -36,7 +42,7 @@ public class AnnuityCalculator {
         displayResults(monthlyPayout, annualInterest,
                 annuityLength, presentValue);
 
-        scnr.close();
+
     }
 
     // calculate present value of ordinary annuity
@@ -60,6 +66,8 @@ public class AnnuityCalculator {
                         -numberOfPayouts)) / monthlyInterest;
 
         return presentValue;
+
+
     }
 
 

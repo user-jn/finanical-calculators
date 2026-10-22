@@ -16,6 +16,7 @@ public class MortgageCalculator {
 
         // Close Scanner when running this file alone
         scnr.close();
+
     }
 
 
